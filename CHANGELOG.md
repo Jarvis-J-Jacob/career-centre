@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added a synthetic Canada role-decision evaluation fixture (`evaluations/fixtures/role_decision_canada.json`) pairing the Toronto operations persona with a "pursue" and a "do-not-pursue" role, plus a contract-backed test that locks in evidence citations and confirms unsupported national-accountability and enterprise-analytics scope is never invented to force a match.
+- Expanded both provider suites to 68/68 passing tests.
+
 ## 4.0.0-beta.4 — 15 July 2026
 
 - Promoted the recurring-search handoff to a non-negotiable product milestone instead of leaving it as buried closing guidance.

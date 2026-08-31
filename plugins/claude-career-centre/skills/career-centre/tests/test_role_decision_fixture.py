@@ -1,0 +1,100 @@
+from __future__ import annotations
+
+import json
+import sys
+import unittest
+from pathlib import Path
+
+SKILL_ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_ROOT = SKILL_ROOT / "scripts"
+FIXTURE_ROOT = Path(__file__).resolve().parent / "fixtures"
+sys.path.insert(0, str(SCRIPT_ROOT))
+sys.path.insert(0, str(FIXTURE_ROOT))
+
+from contracts import validate_role_dossier  # noqa: E402
+from factory import load_persona  # noqa: E402
+
+FIXTURE_PATH = SKILL_ROOT / "evaluations" / "fixtures" / "role_decision_canada.json"
+
+
+class CanadaRoleDecisionFixtureTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+        cls.persona = load_persona(cls.fixture["persona"])
+        cls.evidence_ids = {item["evidence_id"] for item in cls.persona["evidence"]}
+
+    def _scenario(self, scenario_id: str) -> dict:
+        for scenario in self.fixture["scenarios"]:
+            if scenario["scenario_id"] == scenario_id:
+                return scenario
+        raise AssertionError(f"missing scenario: {scenario_id}")
+
+    def test_fixture_is_synthetic_and_covers_both_outcomes(self) -> None:
+        self.assertTrue(self.fixture["synthetic"])
+        self.assertEqual(self.fixture["market"], "Canada")
+        outcomes = {scenario["expected_outcome"] for scenario in self.fixture["scenarios"]}
+        self.assertEqual(outcomes, {"pursue", "do_not_pursue"})
+
+    def test_every_expected_decision_passes_the_role_dossier_contract(self) -> None:
+        for scenario in self.fixture["scenarios"]:
+            errors = validate_role_dossier(scenario["expected_decision"])
+            self.assertEqual(errors, [], f"{scenario['scenario_id']}: {errors}")
+
+    def test_cited_evidence_resolves_to_the_persona_evidence_set(self) -> None:
+        for scenario in self.fixture["scenarios"]:
+            for evidence_id in scenario.get("evidence_used", []):
+                self.assertIn(evidence_id, self.evidence_ids)
+            for requirement in scenario["expected_decision"]["requirement_map"]:
+                for evidence_id in requirement["evidence_ids"]:
+                    self.assertIn(evidence_id, self.evidence_ids, requirement["requirement"])
+
+    def test_cited_evidence_stays_source_only(self) -> None:
+        confidence_by_id = {item["evidence_id"]: item["confidence"] for item in self.persona["evidence"]}
+        used = {
+            evidence_id
+            for scenario in self.fixture["scenarios"]
+            for requirement in scenario["expected_decision"]["requirement_map"]
+            for evidence_id in requirement["evidence_ids"]
+        }
+        self.assertTrue(used)
+        for evidence_id in used:
+            self.assertEqual(confidence_by_id[evidence_id], "source_only")
+
+    def test_pursue_scenario_maps_every_essential_requirement_to_real_evidence(self) -> None:
+        dossier = self._scenario("pursue")["expected_decision"]
+        self.assertIn(dossier["decision"], {"apply", "maybe"})
+        essentials = [item for item in dossier["requirement_map"] if item["importance"] == "essential"]
+        self.assertGreaterEqual(len(essentials), 3)
+        for requirement in essentials:
+            self.assertIn(requirement["assessment"], {"direct", "adjacent"})
+            self.assertTrue(requirement["evidence_ids"])
+
+    def test_do_not_pursue_scenario_never_invents_unsupported_scope(self) -> None:
+        scenario = self._scenario("do_not_pursue")
+        dossier = scenario["expected_decision"]
+        self.assertEqual(dossier["decision"], "skip")
+        self.assertTrue(dossier["skip_reason"].strip())
+        self.assertIn("invent", dossier["skip_reason"].casefold())
+
+        essentials = [item for item in dossier["requirement_map"] if item["importance"] == "essential"]
+        self.assertTrue(essentials)
+        for requirement in essentials:
+            # An unmet essential requirement stays an honest gap with no fabricated evidence.
+            self.assertEqual(requirement["assessment"], "gap")
+            self.assertEqual(requirement["evidence_ids"], [])
+
+        # Each forbidden claim is anchored to an explicit persona restriction, not an editorial choice.
+        restrictions = " ".join(
+            restriction
+            for item in self.persona["evidence"]
+            for restriction in item.get("restrictions", [])
+        ).casefold()
+        guard = scenario["invention_guard"]
+        self.assertTrue(guard["forbidden_claims"])
+        self.assertIn("national accountability", restrictions)
+        self.assertIn("enterprise analytics ownership", restrictions)
+
+
+if __name__ == "__main__":
+    unittest.main()
