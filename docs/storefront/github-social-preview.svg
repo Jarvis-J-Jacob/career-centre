@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">Career Centre — Open Door</title>
+  <desc id="desc">Evidence-safe career decisions and application help without invented experience.</desc>
+  <rect width="1280" height="640" rx="32" fill="#FFF3DF"/>
+  <rect x="52" y="52" width="536" height="536" rx="120" fill="#28524B"/>
+  <g transform="translate(50 50) scale(1.05)">
+    <path d="M143 395V238C143 154 194 103 256 103S369 154 369 238v157" fill="none" stroke="#FFF3DF" stroke-width="48" stroke-linecap="round"/>
+    <path d="M205 395V244c0-35 20-64 51-64s51 29 51 64v151" fill="#E66F5A"/>
+    <circle cx="256" cy="242" r="25" fill="#F5C55B"/>
+    <path d="M256 276C239 317 225 352 208 409h96c-17-57-31-92-48-133Z" fill="#FFF3DF"/>
+    <path d="M181 409h150" stroke="#F5C55B" stroke-width="24" stroke-linecap="round"/>
+  </g>
+  <text x="652" y="190" fill="#28524B" font-family="Georgia, serif" font-size="74" font-weight="700">Career Centre</text>
+  <text x="656" y="260" fill="#C94F43" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="4">OPEN DOOR</text>
+  <text x="656" y="348" fill="#28524B" font-family="Arial, sans-serif" font-size="38" font-weight="600">Find roles worth pursuing.</text>
+  <text x="656" y="402" fill="#28524B" font-family="Arial, sans-serif" font-size="38" font-weight="600">Build honest applications.</text>
+  <line x1="656" y1="455" x2="1155" y2="455" stroke="#F5C55B" stroke-width="10" stroke-linecap="round"/>
+  <text x="656" y="518" fill="#28524B" font-family="Arial, sans-serif" font-size="26">Evidence-safe · Open source · Free</text>
+</svg>

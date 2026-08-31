@@ -1,12 +1,28 @@
 # Career Centre — Open Door
 
+**Use it now:** [Open Career Centre in ChatGPT](https://chatgpt.com/plugins/plugins_6a565bb471908191a969cffc4aa6296f)
+
+**Learn more:** [Product site](https://hoplittlebunny.github.io/career-centre/) · [Installation guide](https://hoplittlebunny.github.io/career-centre/install.html) · [Apache 2.0 License](LICENSE)
+
 Career Centre is created by Amit Sharma and published through his `HopLittleBunny` GitHub account.
 
 Career Centre is a free, evidence-safe career decision agent packaged for ChatGPT and Claude. “Free” means there is no separate Career Centre subscription, API key or publisher-operated backend; the user still needs an eligible ChatGPT or Claude plan and uses that plan's allowance. It helps a job seeker move from an uploaded CV and a few natural preferences to selective role recommendations, exact posting links, honest fit commentary, Word application packs and application follow-through.
 
-[Visit the product site](https://hoplittlebunny.github.io/career-centre/) or [open the installation guide](https://hoplittlebunny.github.io/career-centre/install.html).
-
 The plugins are intentionally backend-free. Amit Sharma does not operate a model API, CV database or account system for them. The user's ChatGPT or Claude environment performs the reasoning and document work using the user's own plan and product limits.
+
+## A 30-second example
+
+Synthetic candidate evidence:
+
+> Supported an APAC transformation rollout and coordinated stakeholders across three markets.
+
+Job requirement:
+
+> Led a global transformation programme.
+
+Career Centre may identify relevant collaboration evidence, but it must not quietly rewrite “supported APAC” as “led global.” It shows the gap, uncertainty and evidence boundary before recommending `Apply`, `Maybe` or `Skip`.
+
+That is the product in miniature: AI can improve how a candidate tells a career story, but it cannot invent a more impressive career. If that boundary matters to you, **star the repository** and inspect or improve the open methodology.
 
 ## The user experience
 
@@ -70,6 +86,12 @@ The intended public routes are OpenAI's universal plugin directory and Claude's 
 Directory visibility does not prove universal installation. OpenAI documents that plugin installation and invocation can depend on plan, workspace, surface, region and included capabilities. Personal Plus/Pro compatibility is therefore a required post-publication test, not a marketing assumption.
 
 Anthropic documents custom plugin upload and GitHub marketplaces for paid plans. The native Claude beta package has been installed on Claude Max web and auto-routed successfully in a normal conversation; ZIP and repository-marketplace installation paths are both included.
+
+## Transparency and security
+
+The complete distributed skills, evidence contracts, local scripts, document templates, public-site source and tests are in this repository. Career Centre has no hidden publisher model API, CV database, account service or application-submission backend. The selected AI host and any job sites still operate under their own policies.
+
+Read [TRANSPARENCY.md](TRANSPARENCY.md), [SECURITY.md](SECURITY.md), [PRIVACY](public-site/privacy.md) and the [contribution guide](CONTRIBUTING.md). Never put a real CV, work-right evidence, contact details, account token or confidential employer material in a public issue.
 
 ## Current status
 
