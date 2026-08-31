@@ -33,8 +33,18 @@ def main() -> int:
     claude_source = RELEASE / claude_latest["file"]
     skill_target = downloads / "career-centre-chatgpt-skill.zip"
     claude_target = downloads / "career-centre-claude-plugin.zip"
-    shutil.copy2(skill_source, skill_target)
-    shutil.copy2(claude_source, claude_target)
+    if skill_source.is_file():
+        shutil.copy2(skill_source, skill_target)
+    elif not skill_target.is_file() or sha256(skill_target) != latest["skill"]["sha256"]:
+        raise SystemExit(
+            "ChatGPT release archive is missing and the public download is not a verified fallback."
+        )
+    if claude_source.is_file():
+        shutil.copy2(claude_source, claude_target)
+    elif not claude_target.is_file() or sha256(claude_target) != claude_latest["sha256"]:
+        raise SystemExit(
+            "Claude release archive is missing and the public download is not a verified fallback."
+        )
     if sha256(skill_target) != latest["skill"]["sha256"]:
         raise SystemExit("Public ChatGPT download checksum mismatch after copy.")
     if sha256(claude_target) != claude_latest["sha256"]:

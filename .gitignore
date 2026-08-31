@@ -2,6 +2,20 @@ __pycache__/
 *.py[cod]
 .DS_Store
 .pytest_cache/
+
+# Local credentials and environment files.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+
+# Personal career artefacts are private by default.
+CAREER_PASSPORT.*
+Career_Passport.*
+career_passport.json
+application-packs/
 release/*.zip
 !release/career-centre-4.0.0-beta.1-submission-plugin.zip
 !release/career-centre-4.0.0-beta.1-submission-skill.zip

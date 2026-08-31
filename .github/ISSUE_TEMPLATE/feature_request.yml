@@ -1,0 +1,32 @@
+name: Feature request
+description: Propose an evidence-safe improvement to the career workflow.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Job-seeker problem
+      description: What is difficult today, and for which type of user or market?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Synthetic example
+      description: Use fictional candidate and employer information only.
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Safety boundaries
+      options:
+        - label: The request does not require inventing candidate evidence or auto-submitting an application.
+          required: true
+        - label: I have not included private or identifying career information.
+          required: true

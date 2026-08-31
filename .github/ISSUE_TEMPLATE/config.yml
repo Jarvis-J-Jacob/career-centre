@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Privacy information
-    url: https://hoplittlebunny.github.io/career-centre/privacy.html
-    about: Read how Career Centre handles career data.
-  - name: Installation guide
-    url: https://hoplittlebunny.github.io/career-centre/install.html
-    about: Follow the tested ChatGPT installation route.
+  - name: Sensitive security or privacy report
+    url: https://github.com/HopLittleBunny/career-centre/security/advisories/new
+    about: Report vulnerabilities privately. Do not include private career data in a public issue.
+  - name: Installation and support
+    url: https://hoplittlebunny.github.io/career-centre/support.html
+    about: Read the support and installation guidance.
